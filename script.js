@@ -1,3 +1,5 @@
+// .........................Variables...................................
+
 let apiKey = "53f6ce4ff60c0d69fa724b693eaf4608";
 let apiLink = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 let input = document.querySelector(".search input");
@@ -6,6 +8,7 @@ let weather = document.querySelector(".weather");
 let weatherIcon = document.querySelector(".weather-icon");
 let error = document.querySelector(".error");
 
+// one async function for every status
 async function weatherInformation(city) {
   const response = await fetch(apiLink + city + `&appid=${apiKey}`);
 
@@ -14,14 +17,14 @@ async function weatherInformation(city) {
     weather.style.display = "none";
   } else {
     const data = await response.json();
-  
+
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-  
+
     weather.style.display = "block";
-  
+
     if (data.weather[0].main == "Clear") {
       weatherIcon.src = "images/clear.png";
     } else if (data.weather[0].main == "Clouds") {
@@ -40,6 +43,7 @@ async function weatherInformation(city) {
   }
 }
 
+// when clicked btn:
 button.addEventListener("click", () => {
   weatherInformation(input.value);
 });
